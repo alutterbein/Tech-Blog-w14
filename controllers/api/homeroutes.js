@@ -14,8 +14,8 @@ router.get('/', withAuth, async (req, res) => {
       attributes: { exclude: ['password'] },
       order: [['name', 'ASC']],
     });
-
-    const users = userData.map((project) => project.get({ plain: true }));
+// changed all instances of" project " from the mini project to " Posts " from (no quotes in actual code)
+    const users = userData.map((Posts) => Posts.get({ plain: true }));
 
     res.render('homepage', {
       users,

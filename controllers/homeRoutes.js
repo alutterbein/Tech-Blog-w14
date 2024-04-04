@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Project, User } = require('../models');
+const { Posts, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
     // Get all projects and JOIN with user data
-    const projectData = await Project.findAll({
+    const postData = await Posts.findAll({
       include: [
         {
           model: User,
@@ -15,21 +15,21 @@ router.get('/', async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const projects = projectData.map((project) => project.get({ plain: true }));
+    const posts = postData.map((project) => posts.get({ plain: true }));
 
     // Pass serialized data and session flag into template
     res.render('homepage', { 
-      projects, 
+      posts, 
       logged_in: req.session.logged_in 
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-router.get('/project/:id', async (req, res) => {
+// i input the name of the Posts model folder but I might actually need the "post"... object..? the post part of Posts
+router.get('/Posts/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
+    const postData = await Posts.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -38,10 +38,10 @@ router.get('/project/:id', async (req, res) => {
       ],
     });
 
-    const project = projectData.get({ plain: true });
-
-    res.render('project', {
-      ...project,
+    const post = postData.get({ plain: true });
+// this again, the 'post' might instead need to be 'Posts'
+    res.render('post', {
+      ...post,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -49,13 +49,14 @@ router.get('/project/:id', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
+// instruction note: Use withAuth middleware to prevent access to route
+// my note: this kind of looks like I'm telling it to find the profile file, which doesn't exist right now, check back later
 router.get('/profile', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
+      include: [{ model: Posts }],
     });
 
     const user = userData.get({ plain: true });
