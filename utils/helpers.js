@@ -11,6 +11,7 @@ module.exports = {
     const randomNum = Math.random();
 
     // Return a random emoji
+    //what the hell is this?
     if (randomNum > 0.7) {
       return `<span for="img" aria-label="lightbulb">💡</span>`;
     } else if (randomNum > 0.4) {

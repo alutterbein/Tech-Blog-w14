@@ -4,12 +4,12 @@ const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
-    // Get all projects and JOIN with user data
+    // Get all posts and JOIN with user data
     const postData = await Posts.findAll({
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['username'],
         },
       ],
     });
@@ -26,14 +26,14 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-// i input the name of the Posts model folder but I might actually need the "post"... object..? the post part of Posts
-router.get('/Posts/:id', async (req, res) => {
+// i input the name of the Posts model folder but I might actually need the "post"... object..? the post part of Posts, I changed to post after checking exercise
+router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Posts.findByPk(req.params.id, {
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['username'],
         },
       ],
     });
@@ -50,7 +50,7 @@ router.get('/Posts/:id', async (req, res) => {
 });
 
 // instruction note: Use withAuth middleware to prevent access to route
-// my note: this kind of looks like I'm telling it to find the profile file, which doesn't exist right now, check back later
+// my note: this is looking for the *fuck no its not* projectRoutes.js file which I have renamed postRoutes, I believe I want this to be the dashboard *fuck no its not*
 router.get('/profile', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
