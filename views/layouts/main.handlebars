@@ -9,15 +9,17 @@
 </head>
 
 <body>
+  <div class="Flex-column justify-space-around"> 
   <header class="display-flex justify-space-between align-center p-2">
     <h1>
-      User Registry
+      Tech Blog
     </h1>
-    {{#if logged_in}}
     <nav>
-      <button class="btn" id="home">home</button>
-      <button class="btn" id="Dashboard">Dashboard</button>
+    {{#if logged_in}}
+    <a href="/user">user</a> |
       <button class="btn" id="logout">logout</button>
+      <button class="btn" id="Dashboard">Dashboard</button>
+      <button class="btn" id="home">home</button>
     </nav>
     {{/if}}
   </header>
@@ -27,7 +29,7 @@
   <footer>
       
   </footer>
-
+</div>
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}

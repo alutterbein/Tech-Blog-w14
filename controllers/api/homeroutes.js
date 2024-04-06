@@ -12,9 +12,9 @@ router.get('/', withAuth, async (req, res) => {
   try {
     const userData = await User.findAll({
       attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
+      order: [['username', 'ASC']], //this used to say 'name', 'ASC' what is ASC?
     });
-// changed all instances of" project " from the mini project to " Posts " from (no quotes in actual code)
+// changed all instances of" project " from the mini project to " Posts " (no quotes in actual code)
     const users = userData.map((Posts) => Posts.get({ plain: true }));
 
     res.render('homepage', {

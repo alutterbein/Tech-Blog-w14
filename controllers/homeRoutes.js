@@ -50,8 +50,8 @@ router.get('/post/:id', async (req, res) => {
 });
 
 // instruction note: Use withAuth middleware to prevent access to route
-// my note: this is looking for the *fuck no its not* projectRoutes.js file which I have renamed postRoutes, I believe I want this to be the dashboard *fuck no its not*
-router.get('/profile', withAuth, async (req, res) => {
+// my note: this is looking for the I'm fairly sure profile is the dashboard and I am replacing all references
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
@@ -61,7 +61,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
-    res.render('profile', {
+    res.render('dashboard', {
       ...user,
       logged_in: true
     });
@@ -73,7 +73,7 @@ router.get('/profile', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    res.redirect('/dashboard');
     return;
   }
 
