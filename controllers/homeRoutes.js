@@ -1,6 +1,9 @@
 const router = require('express').Router();
-const { Posts, User } = require('../models');
+const { Posts, User, Comments } = require('../models');
 const withAuth = require('../utils/auth');
+
+
+
 
 router.get('/', async (req, res) => {
   try {
@@ -15,7 +18,7 @@ router.get('/', async (req, res) => {
     });
 
     // Serialize data so the template can read it
-    const posts = postData.map((project) => posts.get({ plain: true }));
+    const posts = postData.map((post) => post.get({ plain: true }));
 
     // Pass serialized data and session flag into template
     res.render('homepage', { 
@@ -26,8 +29,10 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-// i input the name of the Posts model folder but I might actually need the "post"... object..? the post part of Posts, I changed to post after checking exercise
-router.get('/post/:id', async (req, res) => {
+
+
+// added in comment functionality
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Posts.findByPk(req.params.id, {
       include: [
@@ -35,11 +40,14 @@ router.get('/post/:id', async (req, res) => {
           model: User,
           attributes: ['username'],
         },
+        {model: Comments,
+          include: [{ model: User, attributes: ['username'],}]
+        }
       ],
     });
 
     const post = postData.get({ plain: true });
-// this again, the 'post' might instead need to be 'Posts'
+
     res.render('post', {
       ...post,
       logged_in: req.session.logged_in
@@ -49,21 +57,20 @@ router.get('/post/:id', async (req, res) => {
   }
 });
 
-// instruction note: Use withAuth middleware to prevent access to route
-// my note: this is looking for the I'm fairly sure profile is the dashboard and I am replacing all references
+// route to render dashboard with posts by current user & find all posts by current user with associated user name
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
+
+    const postData = await Posts.findByPk(req.session.user_id, {
+      where: { user_id: req.session.user_id },
       include: [{ model: Posts }],
     });
 
-    const user = userData.get({ plain: true });
+    const posts = postData.get({ plain: true });
 
     res.render('dashboard', {
-      ...user,
-      logged_in: true
+      posts,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -78,6 +85,38 @@ router.get('/login', (req, res) => {
   }
 
   res.render('login');
+});
+router.get('/signup', (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('signup');
+});
+
+
+router.get('/editpost/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Posts.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {model: Comments,
+          include: [{ model: User, attributes: ['username'],}]
+        },
+      ],
+    });
+const post = postData.get({ plain: true });
+
+    res.render('editpost', {
+     ...post,
+      logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
