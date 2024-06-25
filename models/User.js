@@ -20,20 +20,19 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-//      validate: {
-//        isUsername: true,
-// not sure what validate does
-//      },
-//
+     validate: {
+       isUsername: true,
+     },
+
     },
-    // email: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   unique: true,
-    //   validate: {
-    //     isEmail: true,
-    //   },
-    // },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
