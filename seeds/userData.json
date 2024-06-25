@@ -1,22 +1,28 @@
 [
   {
     "username": "user1",
+    "email": "email123456@test.com",
     "password": "password12345"
   },
   {
     "username": "user2",
+    "email": "email13456@test.com",
     "password": "password12345"
   },{
     "username": "user3",
+    "email": "email12456@test.com",
     "password": "password12345"
   },{
     "username": "user4",
+    "email": "email12356@test.com",
     "password": "password12345"
   },{
     "username": "user5",
+    "email": "email12346@test.com",
     "password": "password12345"
   },{
     "username": "user6",
+    "email": "email12345@test.com",
     "password": "password12345"
   }
 ]

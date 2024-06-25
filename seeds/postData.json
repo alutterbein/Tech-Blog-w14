@@ -1,23 +1,35 @@
+
+
 [
   {
     "title": "tech blog post 1",
-    "post": "This is the first test post on the blog."
+    "post": "This is the third test post on the blog.",
+    "user_id": "1"
   },
   {
-    "title": "tech blog post 1",
-    "post": "This is the first test post on the blog."
+    "title": "tech blog post 2",
+    "post": "This is the third test post on the blog.",
+    "user_id": "1"
   },
   {
-    "title": "tech blog post 1",
-    "post": "This is the first test post on the blog."
+    "title": "tech blog post 3",
+    "post": "This is the third test post on the blog.",
+    "user_id": "2"
   },
   {
-    "title": "tech blog post 1",
-    "post": "This is the first test post on the blog."
+    "title": "tech blog post 4",
+    "post": "This is the third test post on the blog.",
+    "user_id": "3"
   },
   {
-    "title": "tech blog post 1",
-    "post": "This is the first test post on the blog."
+    "title": "tech blog post 5",
+    "post": "This is the third test post on the blog.",
+    "user_id": "1"
+  },
+  {
+    "title": "tech blog post 6",
+    "post": "This is the third test post on the blog.",
+    "user_id": "3"
   }
     
 ]
